@@ -35,15 +35,20 @@ const carousel = Vue.createApp({
     nextSlide() {
       this.activeIndex++;
       if (this.activeIndex >= this.arrImages.length) {
-        activeIndex = 0;
+        this.activeIndex = 0;
       }
     },
 
     prevSlide() {
       this.activeIndex--;
       if (this.activeIndex < 0) {
-        activeIndex = this.arrImages.length - 1;
+        this.activeIndex = this.arrImages.length - 1;
       }
+    },
+
+    thumbs(index) {
+      this.activeIndex = index;
+      console.log('cliccata la miniature in posizione ' + index);
     }
   },
 });
