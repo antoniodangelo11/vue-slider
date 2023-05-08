@@ -32,6 +32,13 @@ const carousel = Vue.createApp({
     };
   },
   methods: {
+
+    prevSlide() {
+      this.activeIndex--;
+      if (this.activeIndex < 0) {
+        this.activeIndex = this.arrImages.length - 1;
+      }
+    },
     
     nextSlide() {
       this.activeIndex++;
@@ -40,18 +47,12 @@ const carousel = Vue.createApp({
       }
     },
 
-    prevSlide() {
-      this.activeIndex--;
-      if (this.activeIndex < 0) {
-        this.activeIndex = this.arrImages.length - 1;
-      }
-    },
-
     thumbs(index) {
       this.activeIndex = index;
       console.log('cliccata la miniature in posizione ' + index);
-    }
+    },
   },
+  
   created() {
     // Per richiamare una funzione usare sempre THIS
     setInterval(this.nextSlide, 3000)
