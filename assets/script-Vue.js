@@ -1,7 +1,11 @@
-const carousel = Vue.createApp({
+const app = Vue.createApp({
   data() {
     return {
       activeIndex: 0,
+      sliderDirection: 1,
+      isAutorun: true,
+      idAutorun: null,
+      autorunTime: 3000,
       arrImages: [
         {
         image: 'img/01.webp',
@@ -32,7 +36,7 @@ const carousel = Vue.createApp({
     };
   },
   methods: {
-
+    // Per accedere ad una funzione o un data, usare sempre "THIS."
     prevSlide() {
       this.activeIndex--;
       if (this.activeIndex < 0) {
@@ -47,16 +51,29 @@ const carousel = Vue.createApp({
       }
     },
 
-    thumbs(index) {
+    clickActiveImg(index) {
       this.activeIndex = index;
-      console.log('cliccata la miniature in posizione ' + index);
     },
+
+    runSlider() {
+      if (this.isAutorun) {
+        this.idAutorun = setInterval(
+          () => this.sliderDirection == 1 ? this.nextSlide() : this.prevSlide(), this.autorunTime
+        );
+      }
+      else {
+        clearInterval(this.idAutorun);
+      }
+    },
+
+    stopAutorun() {
+      clearInterval(this.idAutorun);
+    }
   },
   
-  created() {
-    // Per richiamare una funzione usare sempre THIS
-    setInterval(this.nextSlide, 3000)
+  mounted() {
+    this.runSlider();
   },
 });
   
-carousel.mount(".carousel");
+app.mount(".carousel");

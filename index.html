@@ -16,43 +16,50 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
 
     <!-- LINK SCRIPT-VUE.JS -->
-	<script src="assets/script-Vue.js" defer></script>
+	<script src="assets/script-vue.js" defer></script>
 
     <!-- LINK STYLE.CSS -->
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 	<div class="container">
-		<div class="carousel" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-			<div class="highlighted">
+		<div class="carousel">
+			<div class="highlighted" 
+				@mouseover="stopAutorun"
+				@mouseout="runSlider"
+			>
 				<div 
-					class="img_container" 
 					v-for="(item, index) in arrImages"
-					:class="index == activeIndex ? 'active' : ''"
-					>
-					<img 
-						:src="item.image" 
-						alt=""
-					>
+					class="img_container" 
+					:class="{active: index == activeIndex}"
+				>
+					
+					<img :src="item.image" :alt="item.image">
+					
 					<div class="text">
-						<h3> {{ item.title }} </h3>
-						<p> {{ item.text }} </p>
+						<h3>{{ item.title }}</h3>
+						<p>{{ item.text }}</p>
 					</div>
 				</div>
 			</div>
 
-			<div class="thumbs">
+			<div class="thumbs"
+				@mouseover="stopAutorun"
+				@mouseout="runSlider"
+			>
 				<div class="controls">
-					<i class="bi bi-arrow-up-circle-fill btn btn-prev" @click="prevSlide"></i>
-					<i class="bi bi-arrow-down-circle-fill btn btn-next" @click="nextSlide"></i>
+					<i class="bi bi-arrow-up-circle-fill btn btn-prev" 
+					@click="prevSlide"></i>
+					<i class="bi bi-arrow-down-circle-fill btn btn-next" 
+					@click="nextSlide"></i>
 				</div>
+				
 				<img 
-				@click="thumbs(index)"
-				v-for="(item, index) in arrImages"
-				:key="index"
-				:src="item.image" 
-				alt=""
-				:class="index == activeIndex ? 'active' : ''"
+					v-for="(item, index) in arrImages"
+					:class="{active: index == activeIndex}"
+					:src="item.image" 
+					:alt="item.title"
+					@click="clickActiveImg(index)"
 				>
 			</div>
 		</div>
